@@ -8,70 +8,55 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/callback', function(req,res,next){
-  console.log("inside")
+  var finalValue=[];
   var a = ["121719", "121720", "121721"];
   var b = [{
-    "empId":"121719",
-    "role":"Software Engineer",
-    "city":"Dharmapuri"
+    empId:"121719",
+    role:"Software Engineer",
+    city:"Dharmapuri",
+    name:"Metikala Suresh"
   },
   {
-    "empId":"121720",
-    "role":"Software Engineer",
-    "city":"Tirunelveli"
+    empId:"121720",
+    role:"Software Engineer",
+    city:"Tirunelveli",
+    name:"Lakshmanan"
   },
   {
-    "empId":"121721",
-    "role":"Software Engineer",
-    "city":"AP"
+    empId:"121721",
+    role:"Software Engineer",
+    city:"AP",
+    name:"Manjunath"
   }]
 
   function f1(objectA, callback){
     
     objectA.forEach(element => {
       console.log("value "+element)
+      callback(element);
     });
-    display();
+   
   }
 
+  function f2(value){
+    b.forEach(element => {
+      if(element.empId == value){
+        finalValue.push(element);
+      }
+    })
+    console.log(b+ "  value of  array "+JSON.stringify(finalValue))
+  }
+
+
+  
   function display(){
     console.log("print")
   }
-  f1(a,callback);
-  res.render('index', { title: 'Express' });
+  f1(a,f2);
+  res.render('index', { JSONValue: JSON.stringify(finalValue) });
 })
 
 router.get('/promise', function(req,res,next){
-  var a = ["121719", "121720", "121721"];
-  var b = [{
-    "empId":"121719",
-    "role":"Software Engineer",
-    "city":"Dharmapuri"
-  },
-  {
-    "empId":"121720",
-    "role":"Software Engineer",
-    "city":"Tirunelveli"
-  },
-  {
-    "empId":"121721",
-    "role":"Software Engineer",
-    "city":"AP"
-  }]
-
-  function f1(objectA, callback){
-    
-    objectA.forEach(element => {
-      console.log("value "+element)
-    });
-    display();
-  }
-
-  function display(){
-    console.log("print")
-  }
-  f1(a,callback);
-  res.render('index', { title: 'Express' });
   var currentStatus;
 
   var promise = new Promise(function(resolve, reject) {
